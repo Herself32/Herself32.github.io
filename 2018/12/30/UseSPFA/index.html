@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="图论,最短路,学习笔记,">
+  <meta name="keywords" content="学习笔记,图论,最短路,">
 
 
 
@@ -80,14 +80,14 @@
 
 
 <meta name="description" content="讲到SPFA，泥萌是不是都想到了luogu上传的很广的一句话：  关于SPFA，Ta死了。">
-<meta name="keywords" content="图论,最短路,学习笔记">
+<meta name="keywords" content="学习笔记,图论,最短路">
 <meta property="og:type" content="article">
 <meta property="og:title" content="最短路之SPFA学习笔记">
 <meta property="og:url" content="http://yoursite.com/2018/12/30/UseSPFA/index.html">
 <meta property="og:site_name" content="Herself32&#39;s Blog">
 <meta property="og:description" content="讲到SPFA，泥萌是不是都想到了luogu上传的很广的一句话：  关于SPFA，Ta死了。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-12-30T14:35:51.520Z">
+<meta property="og:updated_time" content="2018-12-30T14:43:03.785Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="最短路之SPFA学习笔记">
 <meta name="twitter:description" content="讲到SPFA，泥萌是不是都想到了luogu上传的很广的一句话：  关于SPFA，Ta死了。">
@@ -360,7 +360,7 @@
 <h4 id="主要思想"><a href="#主要思想" class="headerlink" title="主要思想"></a>主要思想</h4><p>初始时，我们将起点加入队列。</p>
 <p>我们每次从队列中取出一个元素，并对所有与它相连的点进行修改，若某个相邻的点修改成功，则将其压入队列，直到队列为空时，程序结束。</p>
 <p>SPFA算法在形式上很像广搜，但是不同的是广度优先搜索中一个点出现在队列中就不会出现第二次。但是SPFA中一个点可能出现在队列之后又被再次放入队列。</p>
-<p>也就是说，一个点修改过其他点之后，过了一段时间可能会重新获得更短的路警察，于是再次用来给另一个点，这样循环往复的进行下去。</p>
+<p>也就是说，一个点修改过其他点之后，过了一段时间可能会重新获得更短的路径，于是再次用来给另一个点查找，这样循环往复的进行下去。</p>
 <h4 id="算法实现"><a href="#算法实现" class="headerlink" title="算法实现"></a>算法实现</h4><p>我们用<code>dist[i]</code>记录起点<code>start</code>到<code>i</code>的最短路径，<code>w[i][j]</code>记录连接<code>i,j</code>边的长度，<code>front[i]</code>记录前驱。</p>
 <p><code>bool</code>数组<code>visited[i]</code>记录一个点是否出现在队列中。</p>
 <p><strong>初始化：</strong><br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i++)dist[i]=inf;</span><br><span class="line">dist[start]=<span class="number">0</span>;</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i++)visited[i]=<span class="literal">false</span>;</span><br></pre></td></tr></table></figure></p>
@@ -388,11 +388,11 @@
       
         <div class="post-tags">
           
+            <a href="/tags/学习笔记/" rel="tag"># 学习笔记</a>
+          
             <a href="/tags/图论/" rel="tag"># 图论</a>
           
             <a href="/tags/最短路/" rel="tag"># 最短路</a>
-          
-            <a href="/tags/学习笔记/" rel="tag"># 学习笔记</a>
           
         </div>
       
@@ -503,7 +503,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">21</span>
+                  <span class="site-state-item-count">22</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
