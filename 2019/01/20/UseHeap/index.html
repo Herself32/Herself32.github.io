@@ -1,0 +1,1086 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=6.6.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.6.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.6.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.6.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.6.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '6.6.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="这真的是一种数据结构，尽管名字有点。。。。">
+<meta name="keywords" content="学习笔记,堆,数据结构">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数据结构之堆学习笔记">
+<meta property="og:url" content="http://yoursite.com/2019/01/20/UseHeap/index.html">
+<meta property="og:site_name" content="Herself32&#39;s Blog">
+<meta property="og:description" content="这真的是一种数据结构，尽管名字有点。。。。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://s1.ax2x.com/2019/01/20/5jMwhB.png">
+<meta property="og:image" content="https://s1.ax2x.com/2019/01/20/5jOmxQ.png">
+<meta property="og:image" content="https://s1.ax2x.com/2019/01/20/5jOVm2.png">
+<meta property="og:image" content="https://s1.ax2x.com/2019/01/20/5jOYha.png">
+<meta property="og:image" content="https://s1.ax2x.com/2019/01/20/5jO0kz.png">
+<meta property="og:updated_time" content="2019-01-20T03:19:25.418Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="数据结构之堆学习笔记">
+<meta name="twitter:description" content="这真的是一种数据结构，尽管名字有点。。。。">
+<meta name="twitter:image" content="https://s1.ax2x.com/2019/01/20/5jMwhB.png">
+
+
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/01/20/UseHeap/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>数据结构之堆学习笔记 | Herself32's Blog</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Herself32's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">终不似，少年游。</p>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-links">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/links/" rel="section"><i class="menu-item-icon fa fa-fw fa-link"></i> <br>友链</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-更新和维护">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/UpdateAndMainTains/" rel="section"><i class="menu-item-icon fa fa-fw fa-star"></i> <br>更新和维护</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/01/20/UseHeap/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Herself32">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/heads.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Herself32's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">数据结构之堆学习笔记
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-01-20 09:41:43 / 修改时间：11:19:25" itemprop="dateCreated datePublished" datetime="2019-01-20T09:41:43+08:00">2019-01-20</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/01/20/UseHeap/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/2019/01/20/UseHeap/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon">
+            <i class="fa fa-eye"></i>
+             阅读次数： 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>这真的是一种数据结构，尽管名字有点。。。。</p>
+<a id="more"></a>
+<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>昨天（2019/1/19）$Payphone-X​$问我堆应该如何实现，当时讲的太仓促，言语特别混乱，于是就有了这篇文章。</p>
+<h3 id="是什么"><a href="#是什么" class="headerlink" title="是什么"></a>是什么</h3><blockquote>
+<p>堆（英语：heap)是计算机科学中一类特殊的数据结构的统称。堆通常是一个可以被看做一棵树的数组对象。                                                              ——百度百科</p>
+</blockquote>
+<p>书面上的定义不太好理解，那我们讲得通俗一点。</p>
+<p>实际上堆是一棵完全二叉树，但它比完全二叉树多了以下两个性质：</p>
+<blockquote>
+<p>1、堆中的每一个节点总是不大于（或不小于）其父节点。</p>
+<p>2、无论如何调整堆，它总是一棵完全二叉树（<del>这不是废话吗</del>）。</p>
+</blockquote>
+<p>那么，根据第一条性质，堆就可以分为大根堆和小根堆两种。</p>
+<p>我们将<strong>根节点最大的堆</strong>叫做最大堆或大根堆，<strong>根节点最小的堆</strong>叫做最小堆或小根堆。</p>
+<p><img src="https://s1.ax2x.com/2019/01/20/5jMwhB.png" alt="5jMwhB.png"></p>
+<p>如图，这就是大根堆和小根堆的一个实例。</p>
+<p>这是按根节点的大小来分，如果按操作种类来分，那么常见的堆有二叉堆、斐波那契堆等。</p>
+<h3 id="如何存储"><a href="#如何存储" class="headerlink" title="如何存储"></a>如何存储</h3><p>堆是线性数据结构，相当于一维数组，有唯一后继。</p>
+<p>所以在代码实现时，我们用一个一维数组<code>Heap[]</code>来存储堆。</p>
+<p>学过完全二叉树的同学们都知道，完全二叉树有这样一个性质，即一个非叶节点<code>i</code>的左儿子的编号为<code>2i</code>，其右儿子的编号为<code>2i+1</code>。</p>
+<p>那么既然堆是一棵完全二叉树，那么也应该满足这个性质。</p>
+<p>所以当一个有$n$个元素的序列${Heap_1,Heap_2,Heap_3,\dots,Heap_n}$满足：</p>
+<p>$Heap_i \leq Heap_{2i} \&amp; Heap_i \leq Heap_{2i+1}$,（小根堆）</p>
+<p>或者：<br>$Heap_i \geq Heap_{2i} \&amp; Heao_i \geq Heap_{2i+1}$（大根堆）</p>
+<p>时，这个序列称为一个堆。</p>
+<p>那么，我们就可以得出，堆顶元素必为这个序列中最大或最小的元素。</p>
+<h3 id="操作"><a href="#操作" class="headerlink" title="操作"></a>操作</h3><p>一个堆支持以下四个操作。</p>
+<blockquote>
+<p>1、插入一个节点；</p>
+<p>2、删除堆顶元素；</p>
+<p>3、获取堆顶元素；</p>
+<p>4、堆排序</p>
+</blockquote>
+<p>某些堆实现还支持其他的一些操作，如斐波那契堆支持检查一个堆中是否存在某个元素。</p>
+<h4 id="时间复杂度"><a href="#时间复杂度" class="headerlink" title="时间复杂度"></a>时间复杂度</h4><p>堆的插入和删除的时间复杂度均为$O(1)-O(\log n)$。</p>
+<p>获取堆顶元素为$O(1)$。</p>
+<p>堆排序为$O(n \log n)$，和快排的时间复杂度一样，但空间复杂度为$O(2n)$，比快排高了一倍。</p>
+<h3 id="操作实现"><a href="#操作实现" class="headerlink" title="操作实现"></a>操作实现</h3><p>在插入和删除两个操作中，还嵌套着两个小操作。</p>
+<blockquote>
+<p>1、$shiftUp$上浮。</p>
+<p>2、$shiftDown$下沉。</p>
+</blockquote>
+<h4 id="一、上浮"><a href="#一、上浮" class="headerlink" title="一、上浮"></a>一、上浮</h4><p>当我们插入一个节点时，（我们现在以小根堆为例）。</p>
+<p>根据小根堆的性质，（每一个节点总是不小于其父节点）。</p>
+<p>那么首先我们要和它的父节点比较，如果这个节点小于它的父节点，那么交换。</p>
+<p>然后继续比较，交换后的节点和它现在的父节点继续比较，如果还小于，那么继续交换。</p>
+<p>直到这个节点要比它的父节点大时，或这个节点成为根节点时，停止比较。</p>
+<p>这就是上浮操作。</p>
+<p>来看这个图：<br><a href="https://imgse.com/i/5jOmxQ" target="_blank" rel="noopener"><img src="https://s1.ax2x.com/2019/01/20/5jOmxQ.png" alt="5jOmxQ.png"></a></p>
+<p>假如我们刚刚插入了一个节点，其点权为2。</p>
+<p>那么就要开始上浮操作了：</p>
+<p>第一步，交换节点7（点权为2）和它的父亲节点3（点权为4）。</p>
+<p><img src="https://s1.ax2x.com/2019/01/20/5jOVm2.png" alt="5jOVm2.png"></p>
+<p>第二步，交换节点3（点权为2）和节点1（点权为7）</p>
+<p><img src="https://s1.ax2x.com/2019/01/20/5jOYha.png" alt="5jOYha.png"></p>
+<p>最后一步，交换节点3（点权为7）和节点7（点权为4）</p>
+<p><img src="https://s1.ax2x.com/2019/01/20/5jO0kz.png" alt="5jO0kz.png"></p>
+<p>至此，这棵完全二叉树就满足堆的性质了。</p>
+<h4 id="二、下沉"><a href="#二、下沉" class="headerlink" title="二、下沉"></a>二、下沉</h4><p>下沉操作是用来删除堆顶元素的。</p>
+<p>当我们删除掉堆顶元素时，把叶子节点中的最后一个拿到根节点上。</p>
+<p>当这个节点的左儿子不大于当前堆的大小时，即操作编号不越界时，</p>
+<p>找出这个节点的左儿子和右儿子中小的那一个。</p>
+<p>再用找出来的这一个和它们的父亲相比较，如果不满足性质，那么交换。</p>
+<p>操作位置移至当前节点的左儿子上。</p>
+<p>这就是下沉操作。</p>
+<h3 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h3><h4 id="大根堆"><a href="#大根堆" class="headerlink" title="大根堆"></a>大根堆</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* Headers */</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstring&gt; </span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cmath&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cctype&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="comment">/* definitions */</span></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> MAXN = <span class="number">1e5</span>+<span class="number">7</span>;</span><br><span class="line"><span class="keyword">int</span> Heap[MAXN],Size,n;</span><br><span class="line"><span class="built_in">string</span> op;</span><br><span class="line"><span class="comment">/* functions */</span></span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">int</span> <span class="title">LeftChild</span><span class="params">(<span class="keyword">int</span> x)</span></span>&#123;</span><br><span class="line">	<span class="keyword">return</span> (x&lt;&lt;<span class="number">1</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">int</span> <span class="title">RightChild</span><span class="params">(<span class="keyword">int</span> x)</span></span>&#123;</span><br><span class="line">	<span class="keyword">return</span> (x&lt;&lt;<span class="number">1</span>)+<span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">shiftUp</span><span class="params">(<span class="keyword">int</span> point)</span></span>&#123;<span class="comment">//上浮操作</span></span><br><span class="line">	<span class="keyword">while</span>(point&gt;<span class="number">1</span>&amp;&amp;Heap[point/<span class="number">2</span>]&lt;Heap[point])&#123;</span><br><span class="line">		swap(Heap[point/<span class="number">2</span>],Heap[point]);</span><br><span class="line">		point/=<span class="number">2</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">shiftDown</span><span class="params">(<span class="keyword">int</span> point)</span></span>&#123;<span class="comment">//下沉操作</span></span><br><span class="line">	<span class="keyword">int</span> Temp;</span><br><span class="line">	<span class="keyword">while</span>(LeftChild(point)&lt;=Size)&#123;</span><br><span class="line">	<span class="keyword">if</span>(RightChild(point)&lt;=Size&amp;&amp;Heap[RightChild(point)]&gt;Heap[LeftChild(point)])</span><br><span class="line">			Temp=RightChild(point);</span><br><span class="line">		<span class="keyword">else</span> Temp=LeftChild(point);</span><br><span class="line">		<span class="keyword">if</span>(Heap[Temp]&gt;Heap[point])&#123;</span><br><span class="line">			swap(Heap[Temp],Heap[point]);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span> <span class="keyword">break</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">push</span><span class="params">(<span class="keyword">int</span> x)</span></span>&#123;<span class="comment">//插入操作</span></span><br><span class="line">	Heap[++Size]=x;</span><br><span class="line">	shiftUp(Size);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">pop</span><span class="params">()</span></span>&#123;<span class="comment">//弹出操作</span></span><br><span class="line">	Heap[<span class="number">1</span>]=Heap[Size--];</span><br><span class="line">	shiftDown(<span class="number">1</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">int</span> <span class="title">top</span><span class="params">()</span></span>&#123;<span class="comment">//获取堆顶元素</span></span><br><span class="line">	<span class="keyword">return</span> Heap[<span class="number">1</span>];</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc,<span class="keyword">char</span> *argv[])</span></span>&#123;</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;n);</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i++)&#123;</span><br><span class="line">		<span class="built_in">cin</span>&gt;&gt;op;</span><br><span class="line">		<span class="keyword">if</span>(op==<span class="string">"push"</span>)&#123;</span><br><span class="line">			<span class="keyword">int</span> x;</span><br><span class="line">			<span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;x);</span><br><span class="line">			push(x);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span>(op==<span class="string">"pop"</span>)&#123;</span><br><span class="line">			pop();</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span>(op==<span class="string">"top"</span>)&#123;</span><br><span class="line">			<span class="keyword">if</span>(!Size)&#123;</span><br><span class="line">				<span class="built_in">printf</span>(<span class="string">"There isn't any elements\n"</span>);<span class="comment">//当前堆为一个空堆</span></span><br><span class="line">				<span class="keyword">continue</span>;</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">else</span>&#123;</span><br><span class="line">				<span class="keyword">int</span> x=top();</span><br><span class="line">				<span class="built_in">printf</span>(<span class="string">"%d\n"</span>,x);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="小根堆"><a href="#小根堆" class="headerlink" title="小根堆"></a>小根堆</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* Headers */</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstring&gt; </span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cmath&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cctype&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="comment">/* definitions */</span></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> MAXN = <span class="number">1e5</span>+<span class="number">7</span>;</span><br><span class="line"><span class="keyword">int</span> Heap[MAXN],Size,n;</span><br><span class="line"><span class="built_in">string</span> op;</span><br><span class="line"><span class="comment">/* functions */</span></span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">int</span> <span class="title">LeftChild</span><span class="params">(<span class="keyword">int</span> x)</span></span>&#123;</span><br><span class="line">	<span class="keyword">return</span> (x&lt;&lt;<span class="number">1</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">int</span> <span class="title">RightChild</span><span class="params">(<span class="keyword">int</span> x)</span></span>&#123;</span><br><span class="line">	<span class="keyword">return</span> (x&lt;&lt;<span class="number">1</span>)+<span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">shiftUp</span><span class="params">(<span class="keyword">int</span> point)</span></span>&#123;</span><br><span class="line">	<span class="keyword">while</span>(point&gt;<span class="number">1</span>&amp;&amp;Heap[point/<span class="number">2</span>]&gt;Heap[point])&#123;</span><br><span class="line">		swap(Heap[point/<span class="number">2</span>],Heap[point]);</span><br><span class="line">		point/=<span class="number">2</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">shiftDown</span><span class="params">(<span class="keyword">int</span> point)</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> Temp;</span><br><span class="line">	<span class="keyword">while</span>(LeftChild(point)&lt;=Size)&#123;</span><br><span class="line">		<span class="keyword">if</span>(RightChild(point)&lt;=Size&amp;&amp;Heap[RightChild(point)]&lt;Heap[LeftChild(point)])&#123;</span><br><span class="line">			Temp=RightChild(point);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span> Temp=LeftChild(point);</span><br><span class="line">		<span class="keyword">if</span>(Heap[Temp]&lt;Heap[point])&#123;</span><br><span class="line">			swap(Heap[Temp],Heap[point]);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span> <span class="keyword">break</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">push</span><span class="params">(<span class="keyword">int</span> x)</span></span>&#123;</span><br><span class="line">	Heap[++Size]=x;</span><br><span class="line">	shiftUp(Size);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">pop</span><span class="params">()</span></span>&#123;</span><br><span class="line">	Heap[<span class="number">1</span>]=Heap[Size--];</span><br><span class="line">	shiftDown(<span class="number">1</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">int</span> <span class="title">top</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">return</span> Heap[<span class="number">1</span>];</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc,<span class="keyword">char</span> *argv[])</span></span>&#123;</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;n);</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i++)&#123;</span><br><span class="line">		<span class="built_in">cin</span>&gt;&gt;op;</span><br><span class="line">		<span class="keyword">if</span>(op==<span class="string">"push"</span>)&#123;</span><br><span class="line">			<span class="keyword">int</span> x;</span><br><span class="line">			<span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;x);</span><br><span class="line">			push(x);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span>(op==<span class="string">"pop"</span>)&#123;</span><br><span class="line">			pop();</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span>(op==<span class="string">"top"</span>)&#123;</span><br><span class="line">			<span class="keyword">if</span>(!Size)&#123;</span><br><span class="line">				<span class="built_in">printf</span>(<span class="string">"There isn't any elements\n"</span>);</span><br><span class="line">				<span class="keyword">continue</span>;</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">else</span>&#123;</span><br><span class="line">				<span class="keyword">int</span> x=top();</span><br><span class="line">				<span class="built_in">printf</span>(<span class="string">"%d\n"</span>,x);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="STL实现"><a href="#STL实现" class="headerlink" title="STL实现"></a>STL实现</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* Headers */</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cmath&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cctype&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>; </span><br><span class="line"><span class="comment">/* definitions */</span></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> MAXN = <span class="number">1e5</span>+<span class="number">7</span>;</span><br><span class="line"><span class="keyword">int</span> n,Size;</span><br><span class="line"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;Heap;</span><br><span class="line"><span class="built_in">string</span> op;</span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">bool</span> <span class="title">cmp</span><span class="params">(<span class="keyword">int</span> x,<span class="keyword">int</span> y)</span></span>&#123;</span><br><span class="line">	<span class="keyword">return</span> x&gt;y;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc,<span class="keyword">char</span> *argv[])</span></span>&#123;</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;n);</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i++)&#123;</span><br><span class="line">		<span class="built_in">cin</span>&gt;&gt;op;</span><br><span class="line">		<span class="keyword">if</span>(op==<span class="string">"push"</span>)&#123;</span><br><span class="line">			<span class="keyword">int</span> x;</span><br><span class="line">			Heap.push_back(x);</span><br><span class="line">			Size++;</span><br><span class="line">			<span class="keyword">if</span>(Size==<span class="number">1</span>)make_heap(Heap.begin(),Heap.end(),cmp);</span><br><span class="line">			<span class="keyword">else</span>&#123;</span><br><span class="line">				push_heap(Heap.begin(),Heap.end(),cmp);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span>(op==<span class="string">"pop"</span>)&#123;</span><br><span class="line">			pop_heap(Heap.begin(),Heap.end(),cmp);</span><br><span class="line">			Heap.pop_back();</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span>(op==<span class="string">"top"</span>)&#123;</span><br><span class="line">			<span class="keyword">if</span>(Size)&#123;</span><br><span class="line">				<span class="keyword">int</span> x;</span><br><span class="line">				x=Heap[<span class="number">0</span>];</span><br><span class="line">				<span class="built_in">printf</span>(<span class="string">"%d\n"</span>,x);</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">else</span>&#123;</span><br><span class="line">				<span class="built_in">printf</span>(<span class="string">"There isn't any elements\n"</span>);</span><br><span class="line">				<span class="keyword">continue</span>;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="堆排序"><a href="#堆排序" class="headerlink" title="堆排序"></a>堆排序</h3><p>本质上就是把一个数组里的所有数插进堆里，然后每一次取出堆顶，就已经排好序列了。</p>
+<p>正序：小根堆，逆序：大根堆。</p>
+<p>时间复杂度:$O(n\log n)$。</p>
+<h4 id="代码实现-1"><a href="#代码实现-1" class="headerlink" title="代码实现"></a>代码实现</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">Heap_Sort</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> N,<span class="built_in">array</span>[MAXN];</span><br><span class="line">	priority_queue&lt;<span class="keyword">int</span>, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;, greater&lt;<span class="keyword">int</span>&gt; &gt;Q;<span class="comment">//定义一个小根堆</span></span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;n);</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;=n<span class="number">-1</span>;i++)&#123;</span><br><span class="line">		<span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;<span class="built_in">array</span>[i]);</span><br><span class="line">		Q.push(<span class="built_in">array</span>[i]);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;=n<span class="number">-1</span>;i++)&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"%d "</span>,Q.top());</span><br><span class="line">		Q.pop();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="警告："><a href="#警告：" class="headerlink" title="警告："></a>警告：</h3><p><strong>我觉得有一句话说得很好：STL只能是锦上添花，而不能是雪中送炭！</strong></p>
+<h1 id="THE-END"><a href="#THE-END" class="headerlink" title="THE END"></a>THE END</h1>
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/学习笔记/" rel="tag"># 学习笔记</a>
+          
+            <a href="/tags/堆/" rel="tag"># 堆</a>
+          
+            <a href="/tags/数据结构/" rel="tag"># 数据结构</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/01/19/HPOJ1010/" rel="next" title="HPOJ1010题解">
+                <i class="fa fa-chevron-left"></i> HPOJ1010题解
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/heads.gif" alt="Herself32">
+            
+              <p class="site-author-name" itemprop="name">Herself32</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">34</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">25</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/Herself32" title="GitHub &rarr; https://github.com/Herself32" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="mailto:herself32@outlook.com" title="E-Mail &rarr; mailto:herself32@outlook.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#是什么"><span class="nav-number">2.</span> <span class="nav-text">是什么</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#如何存储"><span class="nav-number">3.</span> <span class="nav-text">如何存储</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#操作"><span class="nav-number">4.</span> <span class="nav-text">操作</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#时间复杂度"><span class="nav-number">4.1.</span> <span class="nav-text">时间复杂度</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#操作实现"><span class="nav-number">5.</span> <span class="nav-text">操作实现</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#一、上浮"><span class="nav-number">5.1.</span> <span class="nav-text">一、上浮</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#二、下沉"><span class="nav-number">5.2.</span> <span class="nav-text">二、下沉</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#代码实现"><span class="nav-number">6.</span> <span class="nav-text">代码实现</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#大根堆"><span class="nav-number">6.1.</span> <span class="nav-text">大根堆</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#小根堆"><span class="nav-number">6.2.</span> <span class="nav-text">小根堆</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#STL实现"><span class="nav-number">7.</span> <span class="nav-text">STL实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#堆排序"><span class="nav-number">8.</span> <span class="nav-text">堆排序</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#代码实现-1"><span class="nav-number">8.1.</span> <span class="nav-text">代码实现</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#警告："><span class="nav-number">9.</span> <span class="nav-text">警告：</span></a></li></ol><li class="nav-item nav-level-1"><a class="nav-link" href="#THE-END"><span class="nav-number"></span> <span class="nav-text">THE END</span></a></li></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Herself32</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v6.6.0</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv" title="总访客量">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="site-pv" title="总访问量">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=6.6.0"></script>
+
+  <script src="/js/src/motion.js?v=6.6.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/affix.js?v=6.6.0"></script>
+
+  <script src="/js/src/schemes/pisces.js?v=6.6.0"></script>
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=6.6.0"></script>
+<script src="/js/src/post-details.js?v=6.6.0"></script>
+
+
+
+  
+
+
+  <script src="/js/src/bootstrap.js?v=6.6.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+  <script src="//cdn1.lncld.net/static/js/3.11.1/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  <script>
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(function (item) {
+      return GUEST.indexOf(item) > -1;
+    });
+    new Valine({
+      el: '#comments' ,
+      verify: false,
+      notify: false,
+      appId: '5u6cRQmABk4lieuRoqjp4O8O-gzGzoHsz',
+      appKey: 'P9S0kS9YcAuykIdeQDBuUSDi',
+      placeholder: 'QAQ',
+      avatar: 'mm',
+      meta:guest,
+      pageSize: '10' || 10,
+      visitor: false
+    });
+  </script>
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+    
+      <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {equationNumbers: { autoNumber: "AMS" }}
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+      for (i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+  });
+</script>
+<script src="//cdn.jsdelivr.net/npm/mathjax@2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+<style>
+.MathJax_Display {
+  overflow: auto hidden;
+}
+</style>
+
+    
+  
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
