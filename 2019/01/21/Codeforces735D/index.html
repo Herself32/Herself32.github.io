@@ -96,25 +96,25 @@
 
 
 
-  <meta name="description" content="数的奇偶性QWQ">
-<meta name="keywords" content="Solutions,数学&#x2F;数论,字符串">
+  <meta name="description" content="终于找到水黑题啦！嘤~">
+<meta name="keywords" content="Solutions,CodeForces,数学&#x2F;数论">
 <meta property="og:type" content="article">
-<meta property="og:title" content="洛谷P2955题解">
-<meta property="og:url" content="http://yoursite.com/2018/12/01/洛谷P2955题解/index.html">
+<meta property="og:title" content="Codeforces735D题解">
+<meta property="og:url" content="http://yoursite.com/2019/01/21/Codeforces735D/index.html">
 <meta property="og:site_name" content="Herself32&#39;s Blog">
-<meta property="og:description" content="数的奇偶性QWQ">
+<meta property="og:description" content="终于找到水黑题啦！嘤~">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-12-23T03:10:07.145Z">
+<meta property="og:updated_time" content="2019-01-21T03:32:39.489Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="洛谷P2955题解">
-<meta name="twitter:description" content="数的奇偶性QWQ">
+<meta name="twitter:title" content="Codeforces735D题解">
+<meta name="twitter:description" content="终于找到水黑题啦！嘤~">
 
 
 
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/12/01/洛谷P2955题解/">
+  <link rel="canonical" href="http://yoursite.com/2019/01/21/Codeforces735D/">
 
 
 
@@ -124,7 +124,7 @@
   };
 </script>
 
-  <title>洛谷P2955题解 | Herself32's Blog</title>
+  <title>Codeforces735D题解 | Herself32's Blog</title>
   
 
 
@@ -378,7 +378,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/01/洛谷P2955题解/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/01/21/Codeforces735D/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Herself32">
@@ -395,7 +395,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">洛谷P2955题解
+          <h1 class="post-title" itemprop="name headline">Codeforces735D题解
 
               
             
@@ -421,24 +421,12 @@
                 
               
 
-              <time title="创建时间：2018-12-01 11:22:10" itemprop="dateCreated datePublished" datetime="2018-12-01T11:22:10+08:00">2018-12-01</time>
+              <time title="创建时间：2019-01-21 10:16:07 / 修改时间：11:32:39" itemprop="dateCreated datePublished" datetime="2019-01-21T10:16:07+08:00">2019-01-21</time>
             
 
             
               
 
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2018-12-23 11:10:07" itemprop="dateModified" datetime="2018-12-23T11:10:07+08:00">2018-12-23</time>
               
             
           </span>
@@ -452,8 +440,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2018/12/01/洛谷P2955题解/#comments" itemprop="discussionUrl">
-                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/2018/12/01/洛谷P2955题解/" itemprop="commentCount"></span>
+                <a href="/2019/01/21/Codeforces735D/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/2019/01/21/Codeforces735D/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -488,22 +476,26 @@
       
 
       
-        <p>数的奇偶性QWQ</p>
+        <p>终于找到水黑题啦！嘤~</p>
 <a id="more"></a>
-<h1 id="洛谷P2955题解"><a href="#洛谷P2955题解" class="headerlink" title="洛谷P2955题解"></a>洛谷P2955题解</h1><p>P2955奇数偶数 Even？Odd?</p>
-<h3 id="题面描述"><a href="#题面描述" class="headerlink" title="题面描述"></a>题面描述</h3><p>王太阳那惨无人道的二年级老师搞了一个有 N 个正整数的表叫王太阳去判断“奇偶性”（这个词语意思向二年级的学生解释，就是“这个数是单数，还是双数啊？”）。王太阳被那个表的长度深深地震惊到了毕竟他才刚刚学会数数啊。</p>
-<p>写一个程序读入N个整数，如果是双数，那么在单立的一行内输出”even”，如果是单数则类似地输出”odd”.</p>
-<h3 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h3><p>本题看起来很简单，大多数人第一反应应该是：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(num%<span class="number">2</span>==<span class="number">0</span>)	<span class="built_in">printf</span>(<span class="string">"even"</span>);</span><br><span class="line"><span class="keyword">else</span>	<span class="built_in">printf</span>(<span class="string">"odd"</span>);</span><br></pre></td></tr></table></figure>
-<p>但是数据范围确实令人吃了一惊：</p>
-<p>$$1 \leq num \leq10^{60} $$</p>
-<p>什么？高精取模？根本不需要!</p>
-<p>其实这是一道小学一年级的数学题。</p>
-<p>判断一个数是否能被二整除，只需要<strong>判断它的最后一位是否能被2整除</strong>即可。</p>
-<p>所以，显然用字符串解决。</p>
-<h3 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* Headers */</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">namespace</span> FastIO&#123;</span><br><span class="line">	<span class="keyword">const</span> <span class="keyword">int</span> BUFSIZE=(<span class="number">1</span>&lt;&lt;<span class="number">20</span>);</span><br><span class="line">	<span class="keyword">char</span> ibuf[BUFSIZE],*is=ibuf,*it=ibuf;</span><br><span class="line">	<span class="keyword">char</span> obuf[BUFSIZE],*os=obuf,*ot=obuf+BUFSIZE;</span><br><span class="line">	<span class="function"><span class="keyword">inline</span> <span class="keyword">char</span> <span class="title">getch</span><span class="params">()</span></span>&#123;</span><br><span class="line">		<span class="keyword">if</span>(is==it)</span><br><span class="line">			it=(is=ibuf)+fread(ibuf,<span class="number">1</span>,BUFSIZE,<span class="built_in">stdin</span>);</span><br><span class="line">		<span class="keyword">return</span> (is==it)?EOF:*is++;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">inline</span> <span class="keyword">int</span> <span class="title">getint</span><span class="params">()</span></span>&#123;</span><br><span class="line">		<span class="keyword">int</span> res=<span class="number">0</span>,neg=<span class="number">0</span>,ch=getch();</span><br><span class="line">		<span class="keyword">while</span>(!(<span class="built_in">isdigit</span>(ch)||ch==<span class="string">'-'</span>)&amp;&amp;ch!=EOF)</span><br><span class="line">			ch=getch();</span><br><span class="line">		<span class="keyword">if</span>(ch==<span class="string">'-'</span>)&#123;</span><br><span class="line">			neg=<span class="number">1</span>;ch=getch();</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">while</span>(<span class="built_in">isdigit</span>(ch))&#123;</span><br><span class="line">			res=(res&lt;&lt;<span class="number">3</span>)+(res&lt;&lt;<span class="number">1</span>)+(ch-<span class="string">'0'</span>);</span><br><span class="line">			ch=getch();</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> neg?-res:res;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">write</span><span class="params">(<span class="keyword">int</span> x)</span></span>&#123;</span><br><span class="line">    	<span class="keyword">if</span>(x&lt;<span class="number">0</span>) <span class="built_in">putchar</span>(<span class="string">'-'</span>),x=-x;</span><br><span class="line">    	<span class="keyword">if</span>(x&gt;<span class="number">9</span>) write(x/<span class="number">10</span>);</span><br><span class="line">    	<span class="built_in">putchar</span>(x%<span class="number">10</span>+<span class="string">'0'</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">space</span><span class="params">(<span class="keyword">int</span> x)</span></span>&#123;</span><br><span class="line">		<span class="keyword">if</span>(x!=<span class="number">0</span>) <span class="built_in">putchar</span>(<span class="string">' '</span>);</span><br><span class="line">		<span class="keyword">else</span> <span class="built_in">putchar</span>(<span class="string">'\n'</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125; </span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> FastIO;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* definitions */</span></span><br><span class="line"><span class="built_in">string</span> s;</span><br><span class="line"><span class="keyword">int</span> n,len;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* functions */</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc,<span class="keyword">char</span> *argv[]<span class="comment">/*习惯*/</span>)</span></span>&#123;</span><br><span class="line">    #ifndef ltyQwQ's_FILE</span><br><span class="line">    ios::sync_with_stdio(<span class="literal">false</span>);<span class="comment">//关闭流同步，加快cin&amp;&amp;cout的速度。</span></span><br><span class="line">    <span class="built_in">cin</span>&gt;&gt;n;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i++)&#123;</span><br><span class="line">        <span class="built_in">cin</span>&gt;&gt;s;</span><br><span class="line">        len=s.length()<span class="number">-1</span>;</span><br><span class="line">        <span class="keyword">if</span>((s[len]-<span class="string">'0'</span>)%<span class="number">2</span>==<span class="number">0</span>)	<span class="built_in">cout</span>&lt;&lt;<span class="string">"even"</span>;<span class="comment">//判断字符串最后一位是否能被2整除。</span></span><br><span class="line">        <span class="keyword">else</span> <span class="built_in">cout</span>&lt;&lt;<span class="string">"odd"</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;<span class="comment">//完美结束。</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h1 id="THE-END"><a href="#THE-END" class="headerlink" title="THE END"></a>THE END</h1><hr>
-
+<h3 id="题意概述"><a href="#题意概述" class="headerlink" title="题意概述"></a>题意概述</h3><p>某人要交税，交的税钱是收入n的最大因子（$\neq n$，若该数是质数则是1），</p>
+<p>但是现在这人为了避税，把钱拆成几份，使交税最少，输出税钱。</p>
+<h3 id="INPUT-amp-OUTPUT’s-examples"><a href="#INPUT-amp-OUTPUT’s-examples" class="headerlink" title="INPUT &amp; OUTPUT’s examples"></a>INPUT &amp; OUTPUT’s examples</h3><h4 id="Input’s-eg-1"><a href="#Input’s-eg-1" class="headerlink" title="Input’s eg #1"></a>Input’s eg #1</h4><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">27</span><br></pre></td></tr></table></figure>
+<h4 id="Output’s-eg-1"><a href="#Output’s-eg-1" class="headerlink" title="Output’s eg #1"></a>Output’s eg #1</h4><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">3</span><br></pre></td></tr></table></figure>
+<h3 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h3><p>当窝看到这个题的时候，脑子里立马蹦出来:<strong>这tm不就要利用哥德巴赫猜想吗？</strong></p>
+<p>顿时出了一身冷汗，但忍住凉凉的心态把题意看完。</p>
+<p>突然发现，这玩意确实有点和高端数学沾边（也就沾一点）。</p>
+<p>我们来举个栗子：</p>
+<p>当$n=8$时，我们可以把它拆成$3$和$5$，而这两个都是质数，所以显然他们之和为$2$.</p>
+<p><del>通过简单的分析</del>，我们可以得出一些规律：</p>
+<ul>
+<li>当$n$为一个质数时，显然答案为1</li>
+<li>根据哥德巴赫猜想，如果一个数为偶数，那么一定能够被分为两个质数之和，所以若$n$为偶数，答案为$2$。</li>
+<li>剩下了不是质数的奇数，因为<strong>奇数-偶数=奇数</strong>,所以若$n-2$为一个质数，就输出$2$。</li>
+<li>如果以上条件都不符合，那么这个数一定能够被分成$3+$一个偶数，输出$3$。</li>
+</ul>
+<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* Headers */</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cmath&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cctype&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">namespace</span> input&#123;</span><br><span class="line">    <span class="keyword">const</span> <span class="keyword">int</span> BUFSIZE=(<span class="number">1</span>&lt;&lt;<span class="number">20</span>);</span><br><span class="line">    <span class="keyword">char</span> ibuf[BUFSIZE],*is=ibuf,*it=ibuf;</span><br><span class="line">    <span class="keyword">char</span> obuf[BUFSIZE],*os=obuf,*ot=obuf+BUFSIZE;</span><br><span class="line">    <span class="function"><span class="keyword">inline</span> <span class="keyword">char</span> <span class="title">getch</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(is==it)</span><br><span class="line">            it=(is=ibuf)+fread(ibuf,<span class="number">1</span>,BUFSIZE,<span class="built_in">stdin</span>);</span><br><span class="line">        <span class="keyword">return</span> (is==it)?EOF:*is++;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">inline</span> <span class="keyword">int</span> <span class="title">getint</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">int</span> res=<span class="number">0</span>,neg=<span class="number">0</span>,ch=getch();</span><br><span class="line">        <span class="keyword">while</span>(!(<span class="built_in">isdigit</span>(ch)||ch==<span class="string">'-'</span>)&amp;&amp;ch!=EOF)</span><br><span class="line">            ch=getch();</span><br><span class="line">        <span class="keyword">if</span>(ch==<span class="string">'-'</span>)&#123;</span><br><span class="line">            neg=<span class="number">1</span>;ch=getch();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">while</span>(<span class="built_in">isdigit</span>(ch))&#123;</span><br><span class="line">            res=(res&lt;&lt;<span class="number">3</span>)+(res&lt;&lt;<span class="number">1</span>)+(ch-<span class="string">'0'</span>);</span><br><span class="line">            ch=getch();</span><br><span class="line">        &#125;  </span><br><span class="line">        <span class="keyword">return</span> neg?-res:res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> input;</span><br><span class="line"><span class="comment">/* definitions */</span></span><br><span class="line"><span class="keyword">long</span> <span class="keyword">long</span> n;</span><br><span class="line"><span class="comment">/* functions */</span></span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">bool</span> <span class="title">is_prime</span><span class="params">(<span class="keyword">long</span> <span class="keyword">long</span> num)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(num==<span class="number">1</span>||num==<span class="number">0</span>)<span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">	<span class="keyword">else</span>&#123;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">long</span> <span class="keyword">long</span> i=<span class="number">2</span>;i&lt;=<span class="built_in">sqrt</span>(num);i++)&#123;</span><br><span class="line">			<span class="keyword">if</span>(num%i==<span class="number">0</span>)<span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc,<span class="keyword">char</span> *argv[])</span></span>&#123;</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;n);</span><br><span class="line">	<span class="keyword">if</span>(is_prime(n))&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"1\n"</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">if</span>(n%<span class="number">2</span>==<span class="number">0</span>)<span class="built_in">printf</span>(<span class="string">"2\n"</span>);</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">if</span>(is_prime(n<span class="number">-2</span>))<span class="built_in">printf</span>(<span class="string">"2\n"</span>); </span><br><span class="line">	<span class="keyword">else</span> <span class="built_in">printf</span>(<span class="string">"3\n"</span>);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="THE-END"><a href="#THE-END" class="headerlink" title="THE END"></a>THE END</h1>
       
     </div>
 
@@ -528,9 +520,9 @@
           
             <a href="/tags/Solutions/" rel="tag"># Solutions</a>
           
-            <a href="/tags/数学-数论/" rel="tag"># 数学/数论</a>
+            <a href="/tags/CodeForces/" rel="tag"># CodeForces</a>
           
-            <a href="/tags/字符串/" rel="tag"># 字符串</a>
+            <a href="/tags/数学-数论/" rel="tag"># 数学/数论</a>
           
         </div>
       
@@ -543,8 +535,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/12/01/hello-world/" rel="next" title="Hello World">
-                <i class="fa fa-chevron-left"></i> Hello World
+              <a href="/2019/01/20/UseHeap/" rel="next" title="数据结构之二叉堆学习笔记">
+                <i class="fa fa-chevron-left"></i> 数据结构之二叉堆学习笔记
               </a>
             
           </div>
@@ -553,8 +545,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/12/02/洛谷P1048题解/" rel="prev" title="洛谷P1048题解">
-                洛谷P1048题解 <i class="fa fa-chevron-right"></i>
+              <a href="/2019/01/21/LuoguP1816/" rel="prev" title="洛谷P1816题解">
+                洛谷P1816题解 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -762,7 +754,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#洛谷P2955题解"><span class="nav-number">1.</span> <span class="nav-text">洛谷P2955题解</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#题面描述"><span class="nav-number">1.0.1.</span> <span class="nav-text">题面描述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#分析"><span class="nav-number">1.0.2.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#代码实现"><span class="nav-number">1.0.3.</span> <span class="nav-text">代码实现</span></a></li></ol></li></ol><li class="nav-item nav-level-1"><a class="nav-link" href="#THE-END"><span class="nav-number">2.</span> <span class="nav-text">THE END</span></a></li></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#题意概述"><span class="nav-number">1.</span> <span class="nav-text">题意概述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#INPUT-amp-OUTPUT’s-examples"><span class="nav-number">2.</span> <span class="nav-text">INPUT &amp; OUTPUT’s examples</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Input’s-eg-1"><span class="nav-number">2.1.</span> <span class="nav-text">Input’s eg #1</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Output’s-eg-1"><span class="nav-number">2.2.</span> <span class="nav-text">Output’s eg #1</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#分析"><span class="nav-number">3.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#代码"><span class="nav-number">4.</span> <span class="nav-text">代码</span></a></li></ol><li class="nav-item nav-level-1"><a class="nav-link" href="#THE-END"><span class="nav-number"></span> <span class="nav-text">THE END</span></a></li></div>
             
 
           </div>
