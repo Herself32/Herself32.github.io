@@ -118,7 +118,7 @@
 <meta property="og:image" content="https://s2.ax1x.com/2019/01/25/keLVRx.png">
 <meta property="og:image" content="https://s2.ax1x.com/2019/01/25/keL5k9.png">
 <meta property="og:image" content="https://s1.ax2x.com/2019/01/23/5jr9nO.png">
-<meta property="og:updated_time" content="2019-01-25T07:49:24.703Z">
+<meta property="og:updated_time" content="2019-01-25T09:26:22.852Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="幼儿园数论&#x2F;数学学习笔记">
 <meta name="twitter:description" content="数学能考班里第几啊？                     ————唐">
@@ -436,7 +436,7 @@
                 
               
 
-              <time title="创建时间：2019-01-25 08:25:57 / 修改时间：15:49:24" itemprop="dateCreated datePublished" datetime="2019-01-25T08:25:57+08:00">2019-01-25</time>
+              <time title="创建时间：2019-01-25 08:25:57 / 修改时间：17:26:22" itemprop="dateCreated datePublished" datetime="2019-01-25T08:25:57+08:00">2019-01-25</time>
             
 
             
@@ -633,7 +633,7 @@
 <h4 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h4><p>埃氏筛即可。<br>我们用$p[i]$表示$\varphi(i)$,可以一开始把$p[x]$赋值为$x$，然后每次找到它的质因数就$p[x]=p[x]/p[i] \times p[i]-1$<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">Euler</span><span class="params">(<span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i++)p[i]=i;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">2</span>;i&lt;=n;i++)&#123;</span><br><span class="line">		<span class="keyword">if</span>(p[i]==i)&#123;</span><br><span class="line">			<span class="keyword">for</span>(<span class="keyword">int</span> j=i;j&lt;=n;j+=i)&#123;</span><br><span class="line">				p[i]=p[j]/i*(i<span class="number">-1</span>);</span><br><span class="line">			&#125; </span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <h3 id="欧拉定理"><a href="#欧拉定理" class="headerlink" title="欧拉定理"></a>欧拉定理</h3><p><strong>upd：在本机房其他成员在打比赛的同时</strong>，Herself32在学欧拉定理。<br>内容：<br>如果$gcd(a,m)=1$，$a^{\varphi(m)} \equiv 1(mod \; m)$</p>
 <h4 id="扩展？"><a href="#扩展？" class="headerlink" title="扩展？"></a>扩展？</h4><p>当 $m$为质数的时候就是费马小定理.</p>
-<h4 id="扩展欧拉定理："><a href="#扩展欧拉定理：" class="headerlink" title="扩展欧拉定理："></a>扩展欧拉定理：</h4><p>对于$gcd(a,m) \not = 1$,$a^b \equiv a^{min(b,b mod \varphi(m)+\varphi(m))}\;(mod \; m)$</p>
+<h4 id="扩展欧拉定理："><a href="#扩展欧拉定理：" class="headerlink" title="扩展欧拉定理："></a>扩展欧拉定理：</h4><p>对于$gcd(a,m) \not = 1$,$a^b \equiv a^{min(b,b \;mod \;\varphi(m)+\varphi(m))}\;(mod \; m)$</p>
 <h4 id="证明？"><a href="#证明？" class="headerlink" title="证明？"></a>证明？</h4><p>不会。</p>
 <h3 id="阶和原根"><a href="#阶和原根" class="headerlink" title="阶和原根"></a>阶和原根</h3><h4 id="阶"><a href="#阶" class="headerlink" title="阶"></a>阶</h4><p>如果$gcd(a,m)=1$,记$x$为最小的正整数使得$a_x \equiv 1(mod \; m)$<br>那么称$x$是$a$模$m$的阶。<br>性质：$x|\varphi(m)$</p>
 <h4 id="原根"><a href="#原根" class="headerlink" title="原根"></a>原根</h4><p>如果$g$在模$m$意义下的阶是$\varphi(m)$，那么称$g$是$m$的原根。</p>
@@ -685,6 +685,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/01/26/LuoguP2320/" rel="prev" title="洛谷P2320$\lceil$HNOI2006$\rfloor$题解">
+                洛谷P2320$\lceil$HNOI2006$\rfloor$题解 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -760,7 +764,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">40</span>
+                    <span class="site-state-item-count">42</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -835,7 +839,13 @@
                     
                       
                     
-                    <span class="site-state-item-count">30</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">33</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
