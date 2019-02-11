@@ -1,0 +1,1132 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=6.6.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.6.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.6.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.6.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.6.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '6.6.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+
+<script>
+    (function(){
+        if(''){
+            if (prompt('请输入文章密码') !== ''){
+                alert('密码错误！');
+                history.back();
+            }
+        }
+    })();
+</script>
+  <meta name="description" content="半年OI一场空，CE文件见祖宗。">
+<meta name="keywords" content="Solutions,数学&#x2F;数论,二分,单调队列,找规律,递推,模拟,前缀和">
+<meta property="og:type" content="article">
+<meta property="og:title" content="清北学堂寒假提高储备营Day3题解">
+<meta property="og:url" content="http://yoursite.com/2019/01/29/QBXTDay3Sol/index.html">
+<meta property="og:site_name" content="Herself32&#39;s Blog">
+<meta property="og:description" content="半年OI一场空，CE文件见祖宗。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://s2.ax1x.com/2019/01/29/kQ7jL6.png">
+<meta property="og:updated_time" content="2019-02-11T11:59:48.268Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="清北学堂寒假提高储备营Day3题解">
+<meta name="twitter:description" content="半年OI一场空，CE文件见祖宗。">
+<meta name="twitter:image" content="https://s2.ax1x.com/2019/01/29/kQ7jL6.png">
+
+
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/01/29/QBXTDay3Sol/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>清北学堂寒假提高储备营Day3题解 | Herself32's Blog</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Herself32's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">终不似，少年游。</p>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-links">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/links/" rel="section"><i class="menu-item-icon fa fa-fw fa-link"></i> <br>友链</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-更新和维护">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/UpdateAndMainTains/" rel="section"><i class="menu-item-icon fa fa-fw fa-star"></i> <br>更新和维护</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/01/29/QBXTDay3Sol/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Herself32">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/heads.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Herself32's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">清北学堂寒假提高储备营Day3题解
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-01-29 21:29:06" itemprop="dateCreated datePublished" datetime="2019-01-29T21:29:06+08:00">2019-01-29</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-02-11 19:59:48" itemprop="dateModified" datetime="2019-02-11T19:59:48+08:00">2019-02-11</time>
+              
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/01/29/QBXTDay3Sol/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/2019/01/29/QBXTDay3Sol/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon">
+            <i class="fa fa-eye"></i>
+             阅读次数： 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>半年OI一场空，CE文件见祖宗。</p>
+<a id="more"></a>
+<h2 id="A"><a href="#A" class="headerlink" title="A"></a>A</h2><h3 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h3><p>题面不在描述。</p>
+<p>我们手推几组小数据可以得出，</p>
+<p>$$f(1)=1$$<br>$$f(2)=7$$<br>$$f(3)=13$$<br>。。。。。。</p>
+<p>因为直角三角形一定是要拼成正方形的，所以我们可以近似的看成有4种砖。</p>
+<p><strong>1、</strong>$1 \times 1$的方砖。<br><strong>2、</strong>$2 \times 2$的方砖，没有对角线。<br><strong>3、</strong>$2 \times 2$的方砖，有一条从左上到右下的对角线。<br><strong>4、</strong>$2 \times 2$的方砖，有一条从右上到左下的对角线。</p>
+<p>我们考虑在一个矩阵上的划分：<br><img src="https://s2.ax1x.com/2019/01/29/kQ7jL6.png" alt="kQ7jL6.png"></p>
+<p>显然，我们最后一列只能选择全部使用$1 \times 1$的方砖。</p>
+<p>所以，当我们在最后一列选择全部使用$1 \times 1$的方砖时，有$f[n-1]$种情况。</p>
+<p>当我们可以选择最后两列时，就有6种情况了。</p>
+<p>所以，当我们在最后两列选择时，有$f[n-2] \times 6$种情况。</p>
+<p>那么我们就可以得到递推式：</p>
+<p>$$f_i = f_{i-1}+f_{i-2} \times 6$$.</p>
+<p>直接$O(n)$过一遍就行了。</p>
+<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* Headers */</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstdlib&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="comment">/* definitions */</span></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> mod=<span class="number">1e9</span>+<span class="number">7</span>;</span><br><span class="line"><span class="keyword">int</span> n,f[<span class="number">100</span>];</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc,<span class="keyword">char</span> *argv[])</span></span>&#123;</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;n);</span><br><span class="line">	f[<span class="number">0</span>]=<span class="number">1</span>;f[<span class="number">1</span>]=<span class="number">1</span>;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">2</span>;i&lt;=n;i++)f[i]=(f[i<span class="number">-1</span>]+<span class="number">6l</span>l *f[i<span class="number">-2</span>])%mod;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"%d\n"</span>,f[n]);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="B"><a href="#B" class="headerlink" title="B"></a>B</h2><p>题面同样不再描述。</p>
+<p>我们首先考虑一个最暴力的算法。</p>
+<p>首先把读入的数据排序，然后用三重循环判断是否能构成三角形，最后输出面积和。</p>
+<p>附一下核心代码：<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">work</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="built_in">std</span>::sort(num+<span class="number">1</span>,num+n+<span class="number">1</span>);</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i++)&#123;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> j=i+<span class="number">1</span>;j&lt;=n;j++)&#123;</span><br><span class="line">			<span class="keyword">for</span>(<span class="keyword">int</span> k=j+<span class="number">1</span>;k&lt;=n;k++)&#123;</span><br><span class="line">				<span class="keyword">if</span>(test(i,j,k))&#123;</span><br><span class="line">					cnt++;</span><br><span class="line">					sum=(sum+sec(i,j,k));</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>时间复杂度显然为$O(n^3)$，可以得到$ 50pts $的好成绩。</p>
+<p>然后我们考虑一下优化：显然答案满足二分性质。</p>
+<p>首先依旧对于输入数据排序。</p>
+<p>然后我们枚举两重循环，接着<strong>二分查找</strong>能够构成三角形的最大数（临界值）。</p>
+<p>查找时统计答案，并且计算面积。</p>
+<p>时间复杂度$O(n^2 \log n)$，可以得到$70pts$的好成绩。</p>
+<p>由于二分查找比较简单，这里就不附代码了（雾</p>
+<p>继续优化：</p>
+<p>这里就要用到单调队列的思想了。</p>
+<p>我们在枚举前两个值的时候（设它们分别为$a,b$），可以发现，对于每一组$a,b$，都有其对应的临界值$c$（也就是能够构成三角形的最大数）。</p>
+<p>那我们就可以<strong>暴力移动临界值$c$</strong>，完成确定临界值时间复杂度$O(1)$的算法。</p>
+<p>把排好序的输入数据想成一个数轴。</p>
+<p>也就是说，在枚举过程中，对于当前的$a,b$，有其对应的临界值，当枚举到$a,b+1$时，相对应的$c$也向右移动。</p>
+<p>那么我们就可以暴力移动模拟这个过程，用$O(1)$的时间复杂度解决。</p>
+<p>求面积的时候就要用到前缀和的思想了。</p>
+<p>我们把求面积公式（海伦公式）拆开，得到一个多项式，然后就直接用前缀和解决其可。</p>
+<h3 id="代码（由于Herself32本人太菜了，这里直接附上zhx大爷的std-经过魔改）"><a href="#代码（由于Herself32本人太菜了，这里直接附上zhx大爷的std-经过魔改）" class="headerlink" title="代码（由于Herself32本人太菜了，这里直接附上zhx大爷的std,经过魔改）"></a>代码（由于Herself32本人太菜了，这里直接附上zhx大爷的std,经过魔改）</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* Headers */</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstdlib&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="comment">/* definitions */</span></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> maxn = <span class="number">5010</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> mod = <span class="number">1000000007</span>; </span><br><span class="line"><span class="keyword">int</span> n,z[maxn],sum2[maxn],sum4[maxn];</span><br><span class="line"><span class="comment">/* functions */</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">calc</span><span class="params">(<span class="keyword">int</span> l,<span class="keyword">int</span> r,<span class="keyword">int</span> a,<span class="keyword">int</span> b)</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> ans=<span class="number">0</span>;</span><br><span class="line">	ans = <span class="number">2l</span>l *a*a*b*b*(r-l)%mod;</span><br><span class="line">	ans = (ans + <span class="number">2l</span>l * (a*a+b*b) * (sum2[r]-sum2[l]+mo)) %mod;</span><br><span class="line">	ans = (ans - <span class="number">1l</span>l *a*a*a*a*(r-l) - <span class="number">1l</span>l*b*b*b*b*(r-l) - sum4[r]+sum4[l])%mod;</span><br><span class="line">	ans = (ans+mo)%mod;</span><br><span class="line">	<span class="keyword">return</span> ans;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc,<span class="keyword">char</span> *argv[])</span></span>&#123;</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;n);</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> a=<span class="number">1</span>;a&lt;=n;a++)<span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;z[a]);</span><br><span class="line">	<span class="built_in">std</span>::sort(z+<span class="number">1</span>,z+n+<span class="number">1</span>);</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> a=<span class="number">1</span>;a&lt;=n;a++)&#123;</span><br><span class="line">		sum4[a] = (<span class="number">1l</span>l*z[a]*z[a]*z[a]*z[a]+sum4[a<span class="number">-1</span>])%mod;</span><br><span class="line">		sum2[a] = (<span class="number">1l</span>l*z[a]*z[a]+sum2[a<span class="number">-1</span>])%mod;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">int</span> cnt=<span class="number">0</span>,ans=<span class="number">0</span>;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> a=<span class="number">1</span>;a&lt;=n<span class="number">-2</span>;a++)&#123;</span><br><span class="line">		<span class="keyword">int</span> p=a+<span class="number">2</span>;</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> b=a+<span class="number">1</span>;b&lt;=n<span class="number">-1</span>;b++)&#123;</span><br><span class="line">			<span class="keyword">while</span> (p&lt;=n &amp;&amp; z[p]&lt;z[a]+z[b])p++;</span><br><span class="line">			p--;</span><br><span class="line">			cnt+=p-b;</span><br><span class="line">			ans+=calc(b,p,z[a],z[b]);</span><br><span class="line">			<span class="keyword">if</span> (ans&gt;=mod) ans-=mod;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"%d %d\n"</span>,cnt,ans);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="C"><a href="#C" class="headerlink" title="C"></a>C</h2><h3 id="分析-1"><a href="#分析-1" class="headerlink" title="分析"></a>分析</h3><p>直接暴力模拟即可。</p>
+<p>我们开一个数组直接模拟球位，然后直接把题目中的左右调换，这样更便于操作。</p>
+<p>然后观察题意，我们发现，如果激发一个球之后，它将从数组第一个位置消失（弹出），而如果生成球，就要从后面加入数组。</p>
+<p>这不就是一个队列嘛！</p>
+<p>但是我们这里并不需要循环队列，直接用<code>head</code>指针操作即可。</p>
+<p>再提醒大家几个小小细节：</p>
+<blockquote>
+<p>当球位不够时不能直接添加，而是要激发队首的几个球。<br>被动和技能不一样，触发被动并不会使球消失。<br>在生成球的时候，如果球位不够，则激发队首球<strong>1次</strong></p>
+</blockquote>
+<p>好了，那么70+行代码也就写出来了。</p>
+<p>这里还是直接附上zhx神仙的std（Herself32没来得及重写，TA菜爆了）</p>
+<h3 id="代码-1"><a href="#代码-1" class="headerlink" title="代码"></a>代码</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* Headers */</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstdlib&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">/* definitions */</span></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> maxn = <span class="number">500010</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> mo = <span class="number">1000000007</span>;</span><br><span class="line"><span class="keyword">int</span> n,s;</span><br><span class="line"><span class="keyword">int</span> damage,block;</span><br><span class="line"><span class="keyword">int</span> energe[maxn];</span><br><span class="line"><span class="keyword">char</span> q[maxn],str[<span class="number">10</span>];</span><br><span class="line"><span class="keyword">int</span> front=<span class="number">1</span>,tail=<span class="number">1</span>,size=<span class="number">3</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* functions */</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">activate</span><span class="params">(<span class="keyword">int</span> p,<span class="keyword">int</span> x)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (q[p] == <span class="string">'e'</span>) damage = (damage + <span class="number">1l</span>l*max(<span class="number">8</span>+s,<span class="number">0</span>)*x)%mo;</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">if</span> (q[p] == <span class="string">'i'</span>) block = (block + <span class="number">1l</span>l*max(<span class="number">5</span>+s,<span class="number">0</span>)*x)%mo;</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">if</span> (q[p] == <span class="string">'d'</span>) damage = (damage + <span class="number">1l</span>l*energe[p]*x)%mo;</span><br><span class="line">	<span class="keyword">else</span> front--;</span><br><span class="line">	front++;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">use</span><span class="params">(<span class="keyword">int</span> p,<span class="keyword">int</span> x)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (q[p] == <span class="string">'e'</span>) damage = (damage + <span class="number">1l</span>l*max(<span class="number">3</span>+s,<span class="number">0</span>)*x)%mo;</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">if</span> (q[p] == <span class="string">'i'</span>) block = (block + <span class="number">1l</span>l*max(<span class="number">2</span>+s,<span class="number">0</span>)*x)%mo;</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">if</span> (q[p] == <span class="string">'d'</span>) energe[p] = (energe[p] + <span class="number">1l</span>l*max(s+<span class="number">6</span>,<span class="number">0</span>)*x)%mo;</span><br><span class="line">	<span class="keyword">else</span> ;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc,<span class="keyword">char</span> *argv[])</span></span>&#123;</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;n);</span><br><span class="line">	q[<span class="number">1</span>]=<span class="string">'e'</span>;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> a=<span class="number">1</span>;a&lt;=n;a++)&#123;</span><br><span class="line">		<span class="keyword">int</span> opt;</span><br><span class="line">		<span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;opt);</span><br><span class="line">		<span class="keyword">if</span> (opt==<span class="number">1</span>)&#123;</span><br><span class="line">			<span class="built_in">scanf</span>(<span class="string">"%s"</span>,str+<span class="number">1</span>);</span><br><span class="line">			<span class="keyword">int</span> l=<span class="built_in">strlen</span>(str+<span class="number">1</span>);</span><br><span class="line">			<span class="keyword">for</span> (<span class="keyword">int</span> b=<span class="number">1</span>;b&lt;=l;b++)&#123;</span><br><span class="line">				q[++tail] = str[b];</span><br><span class="line">				<span class="keyword">if</span> (str[b] == <span class="string">'d'</span>) energe[tail]=<span class="number">6</span>;</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">while</span> (tail-front+<span class="number">1</span>&gt;size)activate(front,<span class="number">1</span>);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span> (opt==<span class="number">2</span>)&#123;</span><br><span class="line">			<span class="keyword">int</span> x;</span><br><span class="line">			<span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;x);</span><br><span class="line">			activate(front,x);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span> (opt==<span class="number">3</span>)&#123;</span><br><span class="line">			<span class="keyword">int</span> i,x;</span><br><span class="line">			<span class="built_in">scanf</span>(<span class="string">"%d%d"</span>,&amp;i,&amp;x);</span><br><span class="line">			use(front+i<span class="number">-1</span>,x);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span> (opt==<span class="number">4</span>)&#123;</span><br><span class="line">			<span class="keyword">int</span> x;</span><br><span class="line">			<span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;x);</span><br><span class="line">			s+=x;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span> (opt==<span class="number">5</span>)&#123;</span><br><span class="line">			<span class="keyword">int</span> x;</span><br><span class="line">			<span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;x);</span><br><span class="line">			size+=x;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"%d %d\n"</span>,damage,block);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h2><p>最后附一下重新评测的题目地址：</p>
+<p>A题：<a href="https://vijos.org/d/Herself32OnlineJudge/p/5c5bd34bf41362044d56fac1" target="_blank" rel="noopener">HPOJ1030</a><br>B题：<a href="https://vijos.org/d/Herself32OnlineJudge/p/5c5bdf86f41362044c56fa84" target="_blank" rel="noopener">HPOJ1031</a><br>C题：<a href="https://vijos.org/d/Herself32OnlineJudge/p/5c5be103f41362044e56faf1" target="_blank" rel="noopener">HPOJ1032</a></p>
+<p>祝大家AK愉快！</p>
+<h1 id="THE-END"><a href="#THE-END" class="headerlink" title="THE END"></a>THE END</h1>
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Solutions/" rel="tag"># Solutions</a>
+          
+            <a href="/tags/数学-数论/" rel="tag"># 数学/数论</a>
+          
+            <a href="/tags/二分/" rel="tag"># 二分</a>
+          
+            <a href="/tags/单调队列/" rel="tag"># 单调队列</a>
+          
+            <a href="/tags/找规律/" rel="tag"># 找规律</a>
+          
+            <a href="/tags/递推/" rel="tag"># 递推</a>
+          
+            <a href="/tags/模拟/" rel="tag"># 模拟</a>
+          
+            <a href="/tags/前缀和/" rel="tag"># 前缀和</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/01/29/LuoguP1108/" rel="next" title="洛谷P1108题解">
+                <i class="fa fa-chevron-left"></i> 洛谷P1108题解
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/heads.gif" alt="Herself32">
+            
+              <p class="site-author-name" itemprop="name">Herself32</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">47</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">44</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/Herself32" title="GitHub &rarr; https://github.com/Herself32" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="mailto:herself32@outlook.com" title="E-Mail &rarr; mailto:herself32@outlook.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#A"><span class="nav-number">1.</span> <span class="nav-text">A</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#分析"><span class="nav-number">1.1.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#代码"><span class="nav-number">1.2.</span> <span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#B"><span class="nav-number">2.</span> <span class="nav-text">B</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#代码（由于Herself32本人太菜了，这里直接附上zhx大爷的std-经过魔改）"><span class="nav-number">2.1.</span> <span class="nav-text">代码（由于Herself32本人太菜了，这里直接附上zhx大爷的std,经过魔改）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#C"><span class="nav-number">3.</span> <span class="nav-text">C</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#分析-1"><span class="nav-number">3.1.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#代码-1"><span class="nav-number">3.2.</span> <span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#后记"><span class="nav-number">4.</span> <span class="nav-text">后记</span></a></li></ol><li class="nav-item nav-level-1"><a class="nav-link" href="#THE-END"><span class="nav-number"></span> <span class="nav-text">THE END</span></a></li></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Herself32</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v6.6.0</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv" title="总访客量">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="site-pv" title="总访问量">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=6.6.0"></script>
+
+  <script src="/js/src/motion.js?v=6.6.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/affix.js?v=6.6.0"></script>
+
+  <script src="/js/src/schemes/pisces.js?v=6.6.0"></script>
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=6.6.0"></script>
+<script src="/js/src/post-details.js?v=6.6.0"></script>
+
+
+
+  
+
+
+  <script src="/js/src/bootstrap.js?v=6.6.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+  <script src="//cdn1.lncld.net/static/js/3.11.1/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  <script>
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(function (item) {
+      return GUEST.indexOf(item) > -1;
+    });
+    new Valine({
+      el: '#comments' ,
+      verify: false,
+      notify: false,
+      appId: '5u6cRQmABk4lieuRoqjp4O8O-gzGzoHsz',
+      appKey: 'P9S0kS9YcAuykIdeQDBuUSDi',
+      placeholder: 'QAQ',
+      avatar: 'mm',
+      meta:guest,
+      pageSize: '10' || 10,
+      visitor: false
+    });
+  </script>
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+    
+      <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {equationNumbers: { autoNumber: "AMS" }}
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+      for (i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+  });
+</script>
+<script src="//cdn.jsdelivr.net/npm/mathjax@2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+<style>
+.MathJax_Display {
+  overflow: auto hidden;
+}
+</style>
+
+    
+  
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
