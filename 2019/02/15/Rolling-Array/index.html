@@ -1,0 +1,1120 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=6.6.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.6.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.6.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.6.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.6.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '6.6.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+
+<script>
+    (function(){
+        if(''){
+            if (prompt('请输入文章密码') !== ''){
+                alert('密码错误！');
+                history.back();
+            }
+        }
+    })();
+</script>
+  <meta name="description" content="让数组滚起来！">
+<meta name="keywords" content="dp,学习笔记">
+<meta property="og:type" content="article">
+<meta property="og:title" content="压缩空间的利器 - 「滚动数组」">
+<meta property="og:url" content="http://yoursite.com/2019/02/15/Rolling-Array/index.html">
+<meta property="og:site_name" content="Herself32&#39;s Blog">
+<meta property="og:description" content="让数组滚起来！">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-02-15T11:59:57.247Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="压缩空间的利器 - 「滚动数组」">
+<meta name="twitter:description" content="让数组滚起来！">
+
+
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/02/15/Rolling-Array/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>压缩空间的利器 - 「滚动数组」 | Herself32's Blog</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Herself32's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">终不似，少年游。</p>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-links">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/links/" rel="section"><i class="menu-item-icon fa fa-fw fa-link"></i> <br>友链</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-更新和维护">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/UpdateAndMainTains/" rel="section"><i class="menu-item-icon fa fa-fw fa-star"></i> <br>更新和维护</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/15/Rolling-Array/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Herself32">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/heads.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Herself32's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">压缩空间的利器 - 「滚动数组」
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-02-15 19:02:35 / 修改时间：19:59:57" itemprop="dateCreated datePublished" datetime="2019-02-15T19:02:35+08:00">2019-02-15</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/02/15/Rolling-Array/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/2019/02/15/Rolling-Array/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon">
+            <i class="fa fa-eye"></i>
+             阅读次数： 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>让数组滚起来！</p>
+</blockquote>
+<a id="more"></a>
+<h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><p>我们知道，在递推求解某一个题目的时候，很可能会遇到一些空间爆炸的问题。</p>
+<p>如出题人把空间限制压得极小，或者本身定义的状态就多到爆炸，再或者数据范围又极大，都可能导致MLE的情况发生。</p>
+<p>于是，滚动数组，作为一种压缩空间的利器，应运而生。</p>
+<p>还是和例题结合着讲吧。</p>
+<h3 id="例题"><a href="#例题" class="headerlink" title="例题"></a>例题</h3><h4 id="A-HPOJ1024-QBOI2019-Pass-the-Ball"><a href="#A-HPOJ1024-QBOI2019-Pass-the-Ball" class="headerlink" title="A HPOJ1024 [QBOI2019]Pass the Ball"></a>A HPOJ1024 [QBOI2019]Pass the Ball</h4><p><a href="https://vijos.org/d/Herself32OnlineJudge/p/5c52649ff41362860d38a451" target="_blank" rel="noopener">题目链接</a></p>
+<p>本题是对NOIP2008普及组T3传球游戏的加强版。</p>
+<p>显然我们能够得到状态转移方程式：</p>
+<p>$dp_{j,i} = dp_{j-1,i-1} + dp_{j-1,i+1}$</p>
+<p>其中$dp_{i,j}$表示经过$j$次传到编号为$i$的人的手中的方案数。</p>
+<p>但仔细观察完题面，我们发现，数据范围提升了30倍，而空间限制缩到了32MB!</p>
+<p>我们仔细观察一下递推式，会发现:</p>
+<p>递推式中仅仅用到了$dp_{i,j}$这一维以及$dp_{i-1,j}$这一维！</p>
+<p>所以，滚动数组顾名思义。</p>
+<p>我们在求解$dp_{i,j}$这一维时，通过$dp_{i-1,j}$这一维来求。</p>
+<p>而当我们递推到$dp_{i+1,j}$这一维时，直接用$dp_{i,j}$这一维覆盖掉之前的$dp_{i-1,j}$即可。</p>
+<p>因为递推式中仅仅用到了$dp_{i,j}$这一维以及$dp_{i-1,j}$这一维，所以对于答案并没有影响。</p>
+<p>核心代码：(推荐使用位运算<code>&amp;</code>运算符)</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> dp[<span class="number">2</span>][MAXN];</span><br><span class="line">dp[<span class="number">0</span>][<span class="number">1</span>] = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=m;i++)&#123;</span><br><span class="line">    dp[i &amp; <span class="number">1</span>][<span class="number">1</span>] = dp[(i - <span class="number">1</span>) &amp; <span class="number">1</span>][<span class="number">2</span>] + dp[(i - <span class="number">1</span>) &amp; <span class="number">1</span>][n];</span><br><span class="line">    dp[i &amp; <span class="number">1</span>][n] = dp[(i - <span class="number">1</span>) &amp; <span class="number">1</span>][<span class="number">1</span>] + dp[(i - <span class="number">1</span>) &amp; <span class="number">1</span>][n - <span class="number">1</span>];</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">2</span>;j&lt;=n<span class="number">-1</span>;j++)&#123;</span><br><span class="line">        dp[i &amp; <span class="number">1</span>][j] = dp[(i - <span class="number">1</span>) &amp; <span class="number">1</span>][j - <span class="number">1</span>] + dp[(i - <span class="number">1</span>) &amp; <span class="number">1</span>][j + <span class="number">1</span>];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="B-最长公共子序列"><a href="#B-最长公共子序列" class="headerlink" title="B 最长公共子序列"></a>B 最长公共子序列</h4><p>这是一个经典的线性dp问题，题意就不再概述了。</p>
+<p>众所周知（背），最长公共子序列（以下称为LCS）的状态转移方程式为：</p>
+<p>$$dp_{i,j} = 0 \;\;(if \;i=0 or j=0)$$</p>
+<p>$$dp_{i,j} = dp_{i-1,j-1}+1 \;\;(if \;a_i = b_i)$$</p>
+<p>$$dp_{i,j} = max(dp_{i,j-1},dp_{i-1,j})$$</p>
+<p>我们考虑滚动数组优化。</p>
+<h4 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> dp[<span class="number">2</span>][MAXN];</span><br><span class="line"><span class="keyword">int</span> now = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">int</span> a[MAXN],b[MAXN];</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;=n;i++)&#123;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;=m;j++)&#123;</span><br><span class="line">		<span class="keyword">if</span>(i == <span class="number">0</span> || j == <span class="number">0</span>)dp[(now+<span class="number">1</span>)&amp;<span class="number">1</span>][j] = <span class="number">0</span>;</span><br><span class="line">		<span class="keyword">else</span> <span class="keyword">if</span>(a[i<span class="number">-1</span>] == b[i<span class="number">-1</span>])dp[(now+<span class="number">1</span>)&amp;<span class="number">1</span>][j] = dp[now][j<span class="number">-1</span>] + <span class="number">1</span>;</span><br><span class="line">		<span class="keyword">else</span> dp[(now+<span class="number">1</span>)&amp;<span class="number">1</span>][j] = <span class="built_in">std</span>::max(dp[(now+<span class="number">1</span>)&amp;<span class="number">1</span>][j<span class="number">-1</span>],dp[now][j]);</span><br><span class="line">	&#125;</span><br><span class="line">	now = (now + <span class="number">1</span>) &amp; <span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="斐波那契数列"><a href="#斐波那契数列" class="headerlink" title="斐波那契数列"></a>斐波那契数列</h3><p>我们知道，斐波那契数列的递推式用到了$f_{i-1}$和$f_{i-2}$两项。</p>
+<p>那么滚动的时候对3取一下%即可啦。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> mod(x) x%3</span></span><br><span class="line"><span class="keyword">int</span> f[<span class="number">3</span>];</span><br><span class="line">f[<span class="number">0</span>] = <span class="number">0</span>;</span><br><span class="line">f[<span class="number">1</span>] = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">2</span>;i&lt;=n;i++)&#123;</span><br><span class="line">	f[mod(x)] = f[mod(x - <span class="number">1</span>)] + f[mod(x - <span class="number">2</span>)];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="习题"><a href="#习题" class="headerlink" title="习题"></a>习题</h3><p>这里留几道习题强化记忆。</p>
+<ol>
+<li>NOI2001炮兵阵地</li>
+<li>完全背包滚动数组优化</li>
+<li>正在寻找。。。。。</li>
+</ol>
+<h1 id="THE-END"><a href="#THE-END" class="headerlink" title="THE END"></a>THE END</h1>
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/dp/" rel="tag"># dp</a>
+          
+            <a href="/tags/学习笔记/" rel="tag"># 学习笔记</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/02/14/trigonometric-function-of-acute-angle/" rel="next" title="锐角三角函数入门">
+                <i class="fa fa-chevron-left"></i> 锐角三角函数入门
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/02/15/LCAlearn/" rel="prev" title="LCAlearn">
+                LCAlearn <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/heads.gif" alt="Herself32">
+            
+              <p class="site-author-name" itemprop="name">Herself32</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">56</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">56</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/Herself32" title="GitHub &rarr; https://github.com/Herself32" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="mailto:herself32@outlook.com" title="E-Mail &rarr; mailto:herself32@outlook.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#概述"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#例题"><span class="nav-number">2.</span> <span class="nav-text">例题</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#A-HPOJ1024-QBOI2019-Pass-the-Ball"><span class="nav-number">2.1.</span> <span class="nav-text">A HPOJ1024 [QBOI2019]Pass the Ball</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#B-最长公共子序列"><span class="nav-number">2.2.</span> <span class="nav-text">B 最长公共子序列</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#代码"><span class="nav-number">2.3.</span> <span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#斐波那契数列"><span class="nav-number">3.</span> <span class="nav-text">斐波那契数列</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#习题"><span class="nav-number">4.</span> <span class="nav-text">习题</span></a></li></ol><li class="nav-item nav-level-1"><a class="nav-link" href="#THE-END"><span class="nav-number"></span> <span class="nav-text">THE END</span></a></li></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Herself32</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v6.6.0</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv" title="总访客量">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="site-pv" title="总访问量">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=6.6.0"></script>
+
+  <script src="/js/src/motion.js?v=6.6.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/affix.js?v=6.6.0"></script>
+
+  <script src="/js/src/schemes/pisces.js?v=6.6.0"></script>
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=6.6.0"></script>
+<script src="/js/src/post-details.js?v=6.6.0"></script>
+
+
+
+  
+
+
+  <script src="/js/src/bootstrap.js?v=6.6.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+  <script src="//cdn1.lncld.net/static/js/3.11.1/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  <script>
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(function (item) {
+      return GUEST.indexOf(item) > -1;
+    });
+    new Valine({
+      el: '#comments' ,
+      verify: false,
+      notify: false,
+      appId: '5u6cRQmABk4lieuRoqjp4O8O-gzGzoHsz',
+      appKey: 'P9S0kS9YcAuykIdeQDBuUSDi',
+      placeholder: 'QAQ',
+      avatar: 'mm',
+      meta:guest,
+      pageSize: '10' || 10,
+      visitor: false
+    });
+  </script>
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+    
+      <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {equationNumbers: { autoNumber: "AMS" }}
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+      for (i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+  });
+</script>
+<script src="//cdn.jsdelivr.net/npm/mathjax@2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+<style>
+.MathJax_Display {
+  overflow: auto hidden;
+}
+</style>
+
+    
+  
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
