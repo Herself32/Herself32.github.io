@@ -1,0 +1,1131 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=6.6.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.6.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.6.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.6.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.6.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '6.6.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+
+<script>
+    (function(){
+        if(''){
+            if (prompt('请输入文章密码') !== ''){
+                alert('密码错误！');
+                history.back();
+            }
+        }
+    })();
+</script>
+  <meta name="description" content="并查集+离散化">
+<meta name="keywords" content="Solutions,NOI,并查集,离散化">
+<meta property="og:type" content="article">
+<meta property="og:title" content="洛谷P1955「NOI2015」题解">
+<meta property="og:url" content="http://yoursite.com/2019/02/24/LuoguP1955/index.html">
+<meta property="og:site_name" content="Herself32&#39;s Blog">
+<meta property="og:description" content="并查集+离散化">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://s2.ax1x.com/2019/02/24/k4Mdat.png">
+<meta property="og:updated_time" content="2019-02-24T02:45:35.004Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="洛谷P1955「NOI2015」题解">
+<meta name="twitter:description" content="并查集+离散化">
+<meta name="twitter:image" content="https://s2.ax1x.com/2019/02/24/k4Mdat.png">
+
+
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/02/24/LuoguP1955/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>洛谷P1955「NOI2015」题解 | Herself32's Blog</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Herself32's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">终不似，少年游。</p>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-links">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/links/" rel="section"><i class="menu-item-icon fa fa-fw fa-link"></i> <br>友链</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-更新和维护">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/UpdateAndMainTains/" rel="section"><i class="menu-item-icon fa fa-fw fa-star"></i> <br>更新和维护</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/24/LuoguP1955/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Herself32">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/heads.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Herself32's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">洛谷P1955「NOI2015」题解
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-02-24 10:18:12 / 修改时间：10:45:35" itemprop="dateCreated datePublished" datetime="2019-02-24T10:18:12+08:00">2019-02-24</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/02/24/LuoguP1955/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/2019/02/24/LuoguP1955/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon">
+            <i class="fa fa-eye"></i>
+             阅读次数： 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>并查集+离散化</p>
+</blockquote>
+<a id="more"></a>
+<h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>在实现程序自动分析的过程中，常常需要判定一些约束条件是否能被同时满足。</p>
+<p>考虑一个约束满足问题的简化版本：假设x1,x2,x3…代表程序中出现的变量，给定n个形如xi=xj或xi≠xj的变量相等/不等的约束条件，请判定是否可以分别为每一个变量赋予恰当的值，使得上述所有约束条件同时被满足。例如，一个问题中的约束条件为：x1=x2,x2=x3,x3=x4,x4≠x1，这些约束条件显然是不可能同时被满足的，因此这个问题应判定为不可被满足。</p>
+<p>现在给出一些约束满足问题，请分别对它们进行判定。</p>
+<h3 id="输入输出格式"><a href="#输入输出格式" class="headerlink" title="输入输出格式"></a>输入输出格式</h3><h4 id="输入格式"><a href="#输入格式" class="headerlink" title="输入格式"></a>输入格式</h4><p>从文件prog.in中读入数据。</p>
+<p>输入文件的第1行包含1个正整数t，表示需要判定的问题个数。注意这些问题之间是相互独立的。</p>
+<p>对于每个问题，包含若干行：</p>
+<p>第1行包含1个正整数n，表示该问题中需要被满足的约束条件个数。接下来n行，每行包括3个整数i,j,e，描述1个相等/不等的约束条件，相邻整数之间用单个空格隔开。若e=1，则该约束条件为xi=xj；若e=0，则该约束条件为xi≠xj；</p>
+<h4 id="输出格式"><a href="#输出格式" class="headerlink" title="输出格式"></a>输出格式</h4><p>输出到文件 prog.out 中。</p>
+<p>输出文件包括t行。</p>
+<p>输出文件的第 k行输出一个字符串“ YES” 或者“ NO”（不包含引号，字母全部大写），“ YES” 表示输入中的第k个问题判定为可以被满足，“ NO” 表示不可被满足。</p>
+<h3 id="INPUT-amp-OUTPUT’s-examples"><a href="#INPUT-amp-OUTPUT’s-examples" class="headerlink" title="INPUT &amp; OUTPUT’s examples"></a>INPUT &amp; OUTPUT’s examples</h3><h4 id="Input’s-e-g-1"><a href="#Input’s-e-g-1" class="headerlink" title="Input’s e.g. #1"></a>Input’s e.g. #1</h4><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">2</span><br><span class="line">2</span><br><span class="line">1 2 1</span><br><span class="line">1 2 0</span><br><span class="line">2</span><br><span class="line">1 2 1</span><br><span class="line">2 1 1</span><br></pre></td></tr></table></figure>
+<h4 id="Output’s-e-g-1"><a href="#Output’s-e-g-1" class="headerlink" title="Output’s e.g. #1"></a>Output’s e.g. #1</h4><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">NO</span><br><span class="line">YES</span><br></pre></td></tr></table></figure>
+<h4 id="Input’s-e-g-2"><a href="#Input’s-e-g-2" class="headerlink" title="Input’s e.g. #2"></a>Input’s e.g. #2</h4><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">2</span><br><span class="line">3</span><br><span class="line">1 2 1</span><br><span class="line">2 3 1</span><br><span class="line">3 1 1</span><br><span class="line">4</span><br><span class="line">1 2 1</span><br><span class="line">2 3 1</span><br><span class="line">3 4 1</span><br><span class="line">1 4 0</span><br></pre></td></tr></table></figure>
+<h4 id="Output’s-e-g-2"><a href="#Output’s-e-g-2" class="headerlink" title="Output’s e.g. #2"></a>Output’s e.g. #2</h4><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">YES</span><br><span class="line">NO</span><br></pre></td></tr></table></figure>
+<h3 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h3><p>【样例解释1】</p>
+<p>在第一个问题中，约束条件为：x1=x2,x1≠x2。这两个约束条件互相矛盾，因此不可被同时满足。</p>
+<p>在第二个问题中，约束条件为：x1=x2,x1=x2。这两个约束条件是等价的，可以被同时满足。</p>
+<p>【样例说明2】</p>
+<p>在第一个问题中，约束条件有三个：x1=x2,x2=x3,x3=x1。只需赋值使得x1=x1=x1，即可同时满足所有的约束条件。</p>
+<p>在第二个问题中，约束条件有四个：x1=x2,x2=x3,x3=x4,x4≠x1。由前三个约束条件可以推出x1=x2=x3=x4，然而最后一个约束条件却要求x1≠x4，因此不可被满足。</p>
+<p>【数据范围】</p>
+<p><img src="https://s2.ax1x.com/2019/02/24/k4Mdat.png" alt="k4Mdat.png"></p>
+<p>图源洛谷。</p>
+<p>【时限2s，内存512M】</p>
+<h3 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h3><p>我们先考虑题目中的”相等“这一条件。</p>
+<p>我们把每一个变量看做一个节点，一旦有一个相等的条件，那么就把等式两边的变量连一条无向边。</p>
+<p>那么两个变量相等当且仅当它们连通。</p>
+<p>这样就可以用并查集（冰茶姬）来维护了，我们把变量分成若干个集合，每一个集合表示一个连通块。</p>
+<p>首先初始化并查集：（每一个变量单独构成一个集合）</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=m;i++)UFS[i] = i;</span><br></pre></td></tr></table></figure>
+<p>对于每一个相等条件,我们把等式两边的变量所在的集合合并。</p>
+<p>而对于每一个不等条件，我们查询一下，如果不等式两边的变量所在的集合相同，那么不能满足。</p>
+<p>否则（两个变量不在同一个集合），则满足条件。</p>
+<h4 id="结束了？"><a href="#结束了？" class="headerlink" title="结束了？"></a>结束了？</h4><p>别急，还没有。</p>
+<p>我们发现数据范围中$1 \leq x \leq 10^9$很大。</p>
+<p>由于我们只对变量的相等或不等关系关心，那么离散化一下不就好了！</p>
+<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* Headers */</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cmath&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cctype&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;queue&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stack&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;climits&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> FOR(i,a,b,c) for(int i=(a);i&lt;=(b);i+=(c))</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> ROF(i,a,b,c) for(int i=(a);i&gt;=(b);i-=(c))</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> FORL(i,a,b,c) for(long long i=(a);i&lt;=(b);i+=(c))</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> ROFL(i,a,b,c) for(long long i=(a);i&gt;=(b);i-=(c))</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> FORR(i,a,b,c) for(register int i=(a);i&lt;=(b);i+=(c))</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> ROFR(i,a,b,c) for(register int i=(a);i&gt;=(b);i-=(c))</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> lowbit(x) x&amp;(-x)</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> LeftChild(x) x&lt;&lt;1</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> RightChild(x) (x&lt;&lt;1)+1</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> RevEdge(x) x^1</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> FILE_IN(x) freopen(x,<span class="meta-string">"r"</span>,stdin);</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> FILE_OUT(x) freopen(x,<span class="meta-string">"w"</span>,stdout);</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> CLOSE_IN() fclose(stdin);</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> CLOSE_OUT() fclose(stdout);</span></span><br><span class="line"><span class="keyword">namespace</span> FastIO&#123;</span><br><span class="line">    <span class="keyword">const</span> <span class="keyword">int</span> BUFSIZE = <span class="number">1</span> &lt;&lt; <span class="number">20</span>;</span><br><span class="line">    <span class="keyword">char</span> ibuf[BUFSIZE],*is = ibuf,*its = ibuf;</span><br><span class="line">    <span class="keyword">char</span> obuf[BUFSIZE],*os = obuf,*ot = obuf + BUFSIZE;</span><br><span class="line">    <span class="function"><span class="keyword">inline</span> <span class="keyword">char</span> <span class="title">getch</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(is == its)</span><br><span class="line">            its = (is = ibuf)+fread(ibuf,<span class="number">1</span>,BUFSIZE,<span class="built_in">stdin</span>);</span><br><span class="line">        <span class="keyword">return</span> (is == its)?EOF:*is++;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">inline</span> <span class="keyword">int</span> <span class="title">getint</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">int</span> res = <span class="number">0</span>,neg = <span class="number">0</span>,ch = getch();</span><br><span class="line">        <span class="keyword">while</span>(!(<span class="built_in">isdigit</span>(ch) || ch == <span class="string">'-'</span>) &amp;&amp; ch != EOF)</span><br><span class="line">            ch = getch();</span><br><span class="line">        <span class="keyword">if</span>(ch == <span class="string">'-'</span>)&#123;</span><br><span class="line">            neg = <span class="number">1</span>;ch = getch();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">while</span>(<span class="built_in">isdigit</span>(ch))&#123;</span><br><span class="line">            res = (res &lt;&lt; <span class="number">3</span>) + (res &lt;&lt; <span class="number">1</span>)+ (ch - <span class="string">'0'</span>);</span><br><span class="line">            ch = getch();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> neg?-res:res;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">flush</span><span class="params">()</span></span>&#123;</span><br><span class="line">        fwrite(obuf,<span class="number">1</span>,os-obuf,<span class="built_in">stdout</span>);</span><br><span class="line">        os = obuf;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">putch</span><span class="params">(<span class="keyword">char</span> ch)</span></span>&#123;</span><br><span class="line">        *os++ = ch;</span><br><span class="line">        <span class="keyword">if</span>(os == ot)	flush();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">putint</span><span class="params">(<span class="keyword">int</span> res)</span></span>&#123;</span><br><span class="line">        <span class="keyword">static</span> <span class="keyword">char</span> q[<span class="number">10</span>];</span><br><span class="line">        <span class="keyword">if</span>(res==<span class="number">0</span>)	putch(<span class="string">'0'</span>);</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(res &lt; <span class="number">0</span>)&#123;putch(<span class="string">'-'</span>);res = -res;&#125;</span><br><span class="line">        <span class="keyword">int</span> top = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">while</span>(res)&#123;</span><br><span class="line">            q[top++] = res % <span class="number">10</span> + <span class="string">'0'</span>;</span><br><span class="line">            res /= <span class="number">10</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">while</span>(top--)	putch(q[top]);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">space</span><span class="params">(<span class="keyword">bool</span> x)</span></span>&#123;</span><br><span class="line">    	<span class="keyword">if</span>(!x) putch(<span class="string">'\n'</span>);</span><br><span class="line">    	<span class="keyword">else</span> putch(<span class="string">' '</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">read</span><span class="params">(<span class="keyword">int</span> &amp;x)</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> rt = FastIO::getint();</span><br><span class="line">    x = rt;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">print</span><span class="params">(<span class="keyword">int</span> x,<span class="keyword">bool</span> enter)</span></span>&#123;</span><br><span class="line">    FastIO::putint(x);</span><br><span class="line">    FastIO::flush();</span><br><span class="line">    FastIO::space(enter);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/* definitions */</span></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> MAXN = <span class="number">1e5</span> + <span class="number">7</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> MAXM = MAXN &lt;&lt; <span class="number">1</span>;</span><br><span class="line"><span class="keyword">int</span> n,m,disc[MAXM],UFS[MAXM];</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Analysis</span>&#123;</span></span><br><span class="line">    <span class="keyword">int</span> from,to;</span><br><span class="line">    <span class="keyword">bool</span> can;</span><br><span class="line">&#125;;</span><br><span class="line">Analysis Graph[MAXN];</span><br><span class="line"><span class="comment">/* functions */</span></span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">Add_Edge</span><span class="params">(<span class="keyword">int</span> from,<span class="keyword">int</span> to,<span class="keyword">bool</span> cost,<span class="keyword">int</span> place)</span></span>&#123;</span><br><span class="line">    <span class="meta">#<span class="meta-keyword">define</span> disp_one(x) (x&lt;&lt;1)-1</span></span><br><span class="line">    <span class="meta">#<span class="meta-keyword">define</span> disp_two(x) (x&lt;&lt;1)</span></span><br><span class="line">    Graph[place].from = from;</span><br><span class="line">    Graph[place].to = to;</span><br><span class="line">    Graph[place].can = cost;</span><br><span class="line">    disc[disp_one(place)] = from;</span><br><span class="line">    disc[disp_two(place)] = to;</span><br><span class="line">    <span class="meta">#<span class="meta-keyword">undef</span> disp_one</span></span><br><span class="line">    <span class="meta">#<span class="meta-keyword">undef</span> disp_two </span></span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">int</span> <span class="title">Find</span><span class="params">(<span class="keyword">int</span> x)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(UFS[x] == x)<span class="keyword">return</span> x;</span><br><span class="line">    <span class="keyword">return</span> UFS[x] = Find(UFS[x]);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">unionx</span><span class="params">(<span class="keyword">int</span> x,<span class="keyword">int</span> y)</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> findx = Find(x);</span><br><span class="line">    <span class="keyword">int</span> findy = Find(y);</span><br><span class="line">    UFS[findx] = findy;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">int</span> <span class="title">binary_lower_bound</span><span class="params">(<span class="keyword">int</span> x)</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">std</span>::lower_bound(disc + <span class="number">1</span>,disc + m + <span class="number">1</span>,x) - disc;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">work</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;n);</span><br><span class="line">    FOR(i,<span class="number">1</span>,n,<span class="number">1</span>)&#123;</span><br><span class="line">        <span class="keyword">int</span> x,y;</span><br><span class="line">        <span class="keyword">bool</span> z;</span><br><span class="line">        <span class="built_in">std</span>::<span class="built_in">cin</span>&gt;&gt;x&gt;&gt;y&gt;&gt;z;</span><br><span class="line">        Add_Edge(x,y,z,i);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">std</span>::sort(disc + <span class="number">1</span>,disc + (n &lt;&lt; <span class="number">1</span>) + <span class="number">1</span>);</span><br><span class="line">    m = <span class="built_in">std</span>::unique(disc + <span class="number">1</span>,disc + (n &lt;&lt; <span class="number">1</span>) + <span class="number">1</span>) - (disc + <span class="number">1</span>);</span><br><span class="line">    FOR(i,<span class="number">1</span>,m,<span class="number">1</span>)UFS[i] = i;</span><br><span class="line">    FOR(i,<span class="number">1</span>,n,<span class="number">1</span>)&#123;</span><br><span class="line">        <span class="keyword">if</span>(Graph[i].can == <span class="literal">true</span>)&#123;</span><br><span class="line">            <span class="keyword">int</span> search_from = binary_lower_bound(Graph[i].from);</span><br><span class="line">            <span class="keyword">int</span> search_to = binary_lower_bound(Graph[i].to);</span><br><span class="line">            unionx(search_from,search_to);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    FOR(i,<span class="number">1</span>,n,<span class="number">1</span>)&#123;</span><br><span class="line">        <span class="keyword">int</span> search_from = Find(binary_lower_bound(Graph[i].from));</span><br><span class="line">        <span class="keyword">int</span> search_to = Find(binary_lower_bound(Graph[i].to));</span><br><span class="line">        <span class="keyword">if</span>(Graph[i].can == <span class="literal">false</span> &amp;&amp; search_from == search_to)&#123;</span><br><span class="line">            <span class="built_in">puts</span>(<span class="string">"NO"</span>);</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">puts</span>(<span class="string">"YES"</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc,<span class="keyword">char</span> *argv[])</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> t;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;t);</span><br><span class="line">    FOR(i,<span class="number">1</span>,t,<span class="number">1</span>)work();</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="THE-END"><a href="#THE-END" class="headerlink" title="THE END"></a>THE END</h1>
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Solutions/" rel="tag"># Solutions</a>
+          
+            <a href="/tags/NOI/" rel="tag"># NOI</a>
+          
+            <a href="/tags/并查集/" rel="tag"># 并查集</a>
+          
+            <a href="/tags/离散化/" rel="tag"># 离散化</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/02/15/Rolling-Array/" rel="next" title="压缩空间的利器 - 「滚动数组」">
+                <i class="fa fa-chevron-left"></i> 压缩空间的利器 - 「滚动数组」
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/03/02/Introduction-to-Derivatives/" rel="prev" title="导数入门（一）——什么是导数">
+                导数入门（一）——什么是导数 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/heads.gif" alt="Herself32">
+            
+              <p class="site-author-name" itemprop="name">Herself32</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">56</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">57</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/Herself32" title="GitHub &rarr; https://github.com/Herself32" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="mailto:herself32@outlook.com" title="E-Mail &rarr; mailto:herself32@outlook.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#题目描述"><span class="nav-number">1.</span> <span class="nav-text">题目描述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#输入输出格式"><span class="nav-number">2.</span> <span class="nav-text">输入输出格式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#输入格式"><span class="nav-number">2.1.</span> <span class="nav-text">输入格式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#输出格式"><span class="nav-number">2.2.</span> <span class="nav-text">输出格式</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#INPUT-amp-OUTPUT’s-examples"><span class="nav-number">3.</span> <span class="nav-text">INPUT &amp; OUTPUT’s examples</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Input’s-e-g-1"><span class="nav-number">3.1.</span> <span class="nav-text">Input’s e.g. #1</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Output’s-e-g-1"><span class="nav-number">3.2.</span> <span class="nav-text">Output’s e.g. #1</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Input’s-e-g-2"><span class="nav-number">3.3.</span> <span class="nav-text">Input’s e.g. #2</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Output’s-e-g-2"><span class="nav-number">3.4.</span> <span class="nav-text">Output’s e.g. #2</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#说明"><span class="nav-number">4.</span> <span class="nav-text">说明</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#分析"><span class="nav-number">5.</span> <span class="nav-text">分析</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#结束了？"><span class="nav-number">5.1.</span> <span class="nav-text">结束了？</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#代码"><span class="nav-number">6.</span> <span class="nav-text">代码</span></a></li></ol><li class="nav-item nav-level-1"><a class="nav-link" href="#THE-END"><span class="nav-number"></span> <span class="nav-text">THE END</span></a></li></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Herself32</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v6.6.0</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv" title="总访客量">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="site-pv" title="总访问量">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=6.6.0"></script>
+
+  <script src="/js/src/motion.js?v=6.6.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/affix.js?v=6.6.0"></script>
+
+  <script src="/js/src/schemes/pisces.js?v=6.6.0"></script>
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=6.6.0"></script>
+<script src="/js/src/post-details.js?v=6.6.0"></script>
+
+
+
+  
+
+
+  <script src="/js/src/bootstrap.js?v=6.6.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+  <script src="//cdn1.lncld.net/static/js/3.11.1/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  <script>
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(function (item) {
+      return GUEST.indexOf(item) > -1;
+    });
+    new Valine({
+      el: '#comments' ,
+      verify: false,
+      notify: false,
+      appId: '5u6cRQmABk4lieuRoqjp4O8O-gzGzoHsz',
+      appKey: 'P9S0kS9YcAuykIdeQDBuUSDi',
+      placeholder: 'QAQ',
+      avatar: 'mm',
+      meta:guest,
+      pageSize: '10' || 10,
+      visitor: false
+    });
+  </script>
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+    
+      <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {equationNumbers: { autoNumber: "AMS" }}
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+      for (i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+  });
+</script>
+<script src="//cdn.jsdelivr.net/npm/mathjax@2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+<style>
+.MathJax_Display {
+  overflow: auto hidden;
+}
+</style>
+
+    
+  
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
